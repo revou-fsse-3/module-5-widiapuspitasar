@@ -21,8 +21,8 @@ export default function Home() {
         sx={{
           display: 'inline-block',
           margin: '1rem 0 2rem',
-          backgroundColor: 'blue',
-          color: 'black',
+          backgroundColor: 'orange',
+          color: 'white',
           '&:hover': {
               backgroundColor: 'yellow',
               color: 'black',

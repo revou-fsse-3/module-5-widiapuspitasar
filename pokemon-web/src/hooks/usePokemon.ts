@@ -1,27 +1,55 @@
-import { getClient } from '../api';
-import { POKEMON_API_POKEMON_URL } from '../PokeApi';
 import { PokemonDetail } from '../interface';
+import { useEffect, useState } from "react";
+import { getClient } from "../api";
+import { POKEMON_API_POKEMON_URL } from "../PokeApi";
+import { getColorFromUrl } from '../utils/color';
 
 interface UsePokemonProps {
   pokemonName: string | undefined;
 }
 
-const fetchPokemon = async (url: string) => {
-  const result = await getClient.get<PokemonDetail>(url);
-  return result.data;
-};
+const usePokemon = ({ pokemonName }: UsePokemonProps) => {
+  const [pokemon, setPokemon] = useState<PokemonDetail | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
 
-const usePokemon = async ({ pokemonName }: UsePokemonProps) => {
-  if (!pokemonName) return { pokemon: null, isLoading: false };
+  const getPokemonColor = async (pokemon: PokemonDetail | null) => {
+    if (pokemon?.sprites?.other['official-artwork']?.front_default) {
+      const color = await getColorFromUrl(
+        pokemon.sprites.other['official-artwork'].front_default
+      );
+      if (color) setPokemon((prevPokemon) => ({ ...(prevPokemon as PokemonDetail), color }));
+    }
+  };
 
-  const url = `${POKEMON_API_POKEMON_URL}/${pokemonName}`;
-  try {
-    const pokemon = await fetchPokemon(url);
-    return { pokemon, isLoading: false };
-  } catch (error) {
-    console.error('Error fetching Pokemon:', error);
-    return { pokemon: null, isLoading: false };
-  }
+  const fetchPokemon = async () => {
+    if (pokemonName) {
+      setIsLoading(true);
+      try {
+        const url = `${POKEMON_API_POKEMON_URL}/${pokemonName}`;
+        const result = await getClient.get<PokemonDetail>(url);
+
+        if (result?.data) {
+          setPokemon(result.data);
+          getPokemonColor(result.data);
+        }
+      } catch (error) {
+        console.error('Error fetching Pokémon:', error);
+      } finally {
+        setIsLoading(false);
+      }
+    }
+  };
+
+  useEffect(() => {
+    if (pokemonName) {
+      fetchPokemon();
+    }
+  }, [pokemonName]);
+
+  return {
+    pokemon,
+    isLoading,
+  };
 };
 
 export default usePokemon;

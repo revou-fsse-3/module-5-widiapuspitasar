@@ -56,7 +56,6 @@ const PokemonList: React.FC<PokemonListProps> = ({ pokemons }: PokemonListProps)
         {filteredPokemons.length > 0 ? (
           filteredPokemons.map((p) => (
             <Grid item xs={6} key={p.name}>
-              {/* Assuming CardPokemon is a component */}
               <CardPokemon pokemon={p} />
             </Grid>
           ))

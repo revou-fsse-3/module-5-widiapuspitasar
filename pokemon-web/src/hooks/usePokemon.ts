@@ -1,53 +1,28 @@
-import { PokemonDetail } from '../interface';
-import { useEffect, useState } from "react";
-import { getClient } from "../api";
-import { POKEMON_API_POKEMON_URL } from "../PokeApi";
 import { getColorFromUrl } from '../utils/color';
+import { getClient } from '../api';
+import { POKEMON_API_POKEMON_URL } from '../PokeApi';
+import { PokemonDetail } from '../interface';
 
 interface UsePokemonProps {
   pokemonName: string | undefined;
 }
 
-const usePokemon = ({ pokemonName }: UsePokemonProps) => {
-  const [pokemon, setPokemon] = useState<PokemonDetail | null>(null);
-  const [isLoading, setIsLoading] = useState(false);
-
-
-  useEffect(() => {
-    if (pokemonName) {
-      fetchPokemon();
-    }
-  }, [pokemonName]);
-
-  useEffect(() => {
-    if (pokemon) {
-      getPokemonColor()
-    }
-  }, [pokemon])
-
-  const getPokemonColor = async () => {
-    if (pokemon?.sprites?.other["official-artwork"]?.front_default) {
-        const color = await getColorFromUrl(pokemon.sprites.other["official-artwork"].front_default);
-        if (color) setPokemon({ ...pokemon, color });
-    }
+const fetchPokemon = async (url: string) => {
+  const result = await getClient.get<PokemonDetail>(url);
+  return result.data;
 };
 
-  const fetchPokemon = async () => {
-    if (pokemonName) {
-      setIsLoading(true);
-      const url = `${POKEMON_API_POKEMON_URL}/${pokemonName}`;
-      const result = await getClient.get<PokemonDetail>(url);
-      if (result?.data) {
-        setPokemon(result.data);
-      }
-      setIsLoading(false);
-    }
-  };
+const usePokemon = async ({ pokemonName }: UsePokemonProps) => {
+  if (!pokemonName) return { pokemon: null, isLoading: false };
 
-  return {
-    pokemon,
-    isLoading,
-  };
+  const url = `${POKEMON_API_POKEMON_URL}/${pokemonName}`;
+  try {
+    const pokemon = await fetchPokemon(url);
+    return { pokemon, isLoading: false };
+  } catch (error) {
+    console.error('Error fetching Pokemon:', error);
+    return { pokemon: null, isLoading: false };
+  }
 };
 
 export default usePokemon;

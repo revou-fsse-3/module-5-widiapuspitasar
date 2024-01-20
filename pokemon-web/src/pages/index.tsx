@@ -16,13 +16,12 @@ export default function Home() {
   {hasMorePokemon ? (
     <Grid container justifyContent="flex-end" style={{ marginTop: '1rem', marginBottom:'1rem' }}>
       <Button
-        // variant='contained'
         onClick={fetchNextPage}
         sx={{
           display: 'inline-block',
           margin: '1rem 0 2rem',
           backgroundColor: 'orange',
-          color: 'white',
+          color: '',
           '&:hover': {
               backgroundColor: 'yellow',
               color: 'black',

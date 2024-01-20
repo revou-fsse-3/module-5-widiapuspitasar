@@ -1,17 +1,19 @@
-import { useRouter } from 'next/router';
-import usePokemon from '../../hooks/usePokemon';
 import { Container, Grid, Box, Button } from '@mui/material';
 import { AvatarPokemon, BasicInfoPokemon, Navbar, StatusPokemon } from '../../component';
 import Link from 'next/link';
+import usePokemon from '../../hooks/usePokemon';
+import { PokemonDetail } from '@/interface';
 
-const DetailPokemon = () => {
-  const router = useRouter();
-  const { pokemonName } = router.query!; // Non-null assertion operator
-  const { pokemon, isLoading } = usePokemon({ pokemonName: pokemonName as string });
+interface DetailPokemonProps {
+  pokemonName: string;
+  pokemon: PokemonDetail;
+  isLoading: boolean;
+}
 
+const DetailPokemon = ({ pokemonName, pokemon, isLoading }: DetailPokemonProps) => {
   return (
     <Container>
-      <Navbar/>
+      <Navbar />
       <Grid
         container
         flexDirection="column"
@@ -42,7 +44,7 @@ const DetailPokemon = () => {
                         display: 'inline-block',
                         margin: '1rem 0 2rem',
                         backgroundColor: 'orange',
-                        color: 'black',
+                        color: 'white',
                         '&:hover': {
                           backgroundColor: 'orange',
                           color: 'white',
@@ -64,6 +66,17 @@ const DetailPokemon = () => {
   );
 };
 
+export async function getServerSideProps({ params }: { params: { pokemonName: string } }) {
+  const pokemonName = params?.pokemonName;
+  const { pokemon, isLoading } = await usePokemon({ pokemonName });
 
+  return {
+    props: {
+      pokemonName,
+      pokemon,
+      isLoading,
+    },
+  };
+}
 
 export default DetailPokemon;

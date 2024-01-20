@@ -68,7 +68,7 @@ const DetailPokemon = ({ pokemonName, pokemon, isLoading }: DetailPokemonProps) 
 
 export async function getServerSideProps({ params }: { params: { pokemonName: string } }) {
   const pokemonName = params?.pokemonName;
-  const { pokemon, isLoading } = await usePokemon({ pokemonName });
+  const { pokemon, isLoading } = await fetchData(pokemonName);
 
   return {
     props: {
@@ -77,6 +77,11 @@ export async function getServerSideProps({ params }: { params: { pokemonName: st
       isLoading,
     },
   };
+}
+
+async function fetchData(pokemonName: string) {
+  const { pokemon, isLoading } = await usePokemon({ pokemonName });
+  return { pokemon, isLoading };
 }
 
 export default DetailPokemon;

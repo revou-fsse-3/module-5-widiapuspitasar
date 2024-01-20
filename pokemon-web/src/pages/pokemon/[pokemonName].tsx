@@ -79,4 +79,4 @@ export async function getServerSideProps({ params }: { params: { pokemonName: st
   };
 }
 
-export default DetailPokemon;
+export default DetailPokemon;

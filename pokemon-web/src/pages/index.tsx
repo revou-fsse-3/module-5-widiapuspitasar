@@ -1,4 +1,4 @@
-// pages/index.tsx
+
 import {Grid, Button, Container  } from '@mui/material';
 import usePokemons from '../hooks/usePokemons';
 import { PokemonList, Navbar } from '../component';

@@ -1,4 +1,3 @@
-import { getColorFromUrl } from '../utils/color';
 import { getClient } from '../api';
 import { POKEMON_API_POKEMON_URL } from '../PokeApi';
 import { PokemonDetail } from '../interface';

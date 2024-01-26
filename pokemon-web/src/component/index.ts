@@ -1,4 +1,4 @@
-export { default as Navbar } from './Navbar'
+
 export { default as PokemonList } from './PokemonList'
 export { default as CardPokemon } from './CardPokemon'
 export { default as AvatarPokemon } from './AvatarPokemon'

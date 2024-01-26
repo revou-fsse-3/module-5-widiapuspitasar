@@ -1,8 +1,9 @@
 import { Container, Grid, Box, Button } from '@mui/material';
-import { AvatarPokemon, BasicInfoPokemon, Navbar, StatusPokemon } from '../../component';
+import { AvatarPokemon, BasicInfoPokemon, StatusPokemon } from '../../component';
 import Link from 'next/link';
 import usePokemon from '../../hooks/usePokemon';
 import { PokemonDetail } from '@/interface';
+import Navbar from '@/components/Navbar';
 
 interface DetailPokemonProps {
   pokemonName: string;

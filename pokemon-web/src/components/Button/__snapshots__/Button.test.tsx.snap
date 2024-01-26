@@ -1,0 +1,19 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Button Component applies additional className to the button 1`] = `
+<button
+  class="bg-black color-white text-white custom-button"
+  style="background-color: black; color: white;"
+>
+  Next
+</button>
+`;
+
+exports[`Button Component calls onClick callback when button is clicked 1`] = `
+<button
+  class="bg-black color-white text-white undefined"
+  style="background-color: black; color: white;"
+>
+  Next
+</button>
+`;

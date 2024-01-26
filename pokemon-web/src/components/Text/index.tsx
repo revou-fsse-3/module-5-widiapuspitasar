@@ -1,14 +1,21 @@
-import { ReactNode } from "react";
+import React, { ReactNode } from "react";
 
 interface Props {
     className?: string;
     children: ReactNode;
+    color?: string;
 }
 
-const Text = ({children, className} : Props) => {
+const Text = ({ children, className, color }: Props) => {
+    const textStyle = {
+        color: color || 'black',
+    };
+
     return (
-        <p className={className}> {children}</p>
-    )
-}
+        <h1 className={className} style={textStyle}>
+            {children}
+        </h1>
+    );
+};
 
-export default Text
+export default Text;

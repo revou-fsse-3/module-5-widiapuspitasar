@@ -15,7 +15,13 @@
       "@/*": [
         "./src/*"
       ]
-    }
+    },
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
+    "moduleResolution": "node"
   },
   "include": [
     "next-env.d.ts",
